@@ -1,4 +1,6 @@
-import { Theme as ThemeIcon } from "./Icons";
+import { Theme as ThemeIcon } from "./Icons.js";
+
+type ThemeOption = "dark" | "light";
 
 const themeToggleId = "theme";
 
@@ -17,14 +19,19 @@ const Header = `
 const toggleDarkMode = () => {
   const doc = document.documentElement;
   const currentTheme = doc.getAttribute("data-theme");
+  let newTheme: ThemeOption;
   if (currentTheme === "dark") {
-    doc.setAttribute("data-theme", "lite");
-  } else if (currentTheme === "light") {
-    doc.setAttribute("data-theme", "dark");
+    newTheme = "light";
+    doc.setAttribute("data-theme", newTheme);
+  }
+  if (currentTheme === "light") {
+    newTheme = "dark";
+    doc.setAttribute("data-theme", newTheme);
   }
 };
 export function setupThemeToggle() {
   const themeToggle = document.getElementById(themeToggleId);
+  if (!themeToggle) return;
   themeToggle.addEventListener("click", toggleDarkMode);
 }
 
