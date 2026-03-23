@@ -1,6 +1,6 @@
-import { Theme as ThemeIcon } from './Icons';
+import { Theme as ThemeIcon } from "./Icons";
 
-const themeToggleId = 'theme';
+const themeToggleId = "theme";
 
 const Header = `
 <header>
@@ -15,19 +15,17 @@ const Header = `
 `;
 
 const toggleDarkMode = () => {
-    const doc = document.documentElement;
-    const currentTheme = doc.getAttribute('data-theme');
-    if (currentTheme === 'dark') {
-        doc.setAttribute('data-theme', 'lite');
-    } else if (currentTheme === 'light') {
-        doc.setAttribute('data-theme', 'dark');
-    }
-}
+  const doc = document.documentElement;
+  const currentTheme = doc.getAttribute("data-theme");
+  if (currentTheme === "dark") {
+    doc.setAttribute("data-theme", "lite");
+  } else if (currentTheme === "light") {
+    doc.setAttribute("data-theme", "dark");
+  }
+};
 export function setupThemeToggle() {
-    const themeToggle = document.getElementById(themeToggleId);
-    themeToggle.addEventListener('click', toggleDarkMode);
-
+  const themeToggle = document.getElementById(themeToggleId);
+  themeToggle.addEventListener("click", toggleDarkMode);
 }
 
-
-export default Header
+export default Header;

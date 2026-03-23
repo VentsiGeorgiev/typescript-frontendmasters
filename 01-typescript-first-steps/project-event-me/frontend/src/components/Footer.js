@@ -1,4 +1,4 @@
-import * as Icons from './Icons.js';
+import * as Icons from "./Icons.js";
 
 const Footer = `
 <footer>
@@ -7,4 +7,4 @@ const Footer = `
 </footer>
 `;
 
-export default Footer
+export default Footer;
