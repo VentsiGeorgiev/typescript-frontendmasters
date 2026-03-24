@@ -1,9 +1,10 @@
 import { Router } from "express";
-import db from "../db.js";
+import db from "../db.ts";
+import type { Id } from "../types.ts";
 
 const router = Router();
 
-export const getUser = (userId) => {
+export const getUser = (userId: Id) => {
   const byId = db.prepare("SELECT * FROM users WHERE id = @userId");
   return byId.get({ userId });
 };
@@ -19,13 +20,14 @@ router.post("/new", (req, res) => {
   const cols = Object.keys(data).join(" , ");
   const vals = Object.values(data).join(" , ");
   const insertUser = db.prepare(`INSERT INTO users(@cols) VALUES (@vals)`);
-  const { lastInsertRowid: id } = insertUser.run({ cols, vals });
+  const { lastInsertRowid } = insertUser.run({ cols, vals });
+  const id = lastInsertRowid as number;
   const user = getUser(id);
   res.json(user);
 });
 
 router.get("/:id", (req, res) => {
-  const id = req.params.id;
+  const id = parseInt(req.params.id);
   const user = getUser(id);
   if (!user) {
     res.status(404).json({ error: "User not found" });
@@ -34,7 +36,7 @@ router.get("/:id", (req, res) => {
 });
 
 router.patch("/:id", (req, res) => {
-  const userId = req.params.id;
+  const userId = parseInt(req.params.id);
   const patch = req.body;
 
   const updateCol = db.prepare(`
