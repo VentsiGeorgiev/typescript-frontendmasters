@@ -2,48 +2,28 @@
  * A class that represents a deferred operation.
  * @class
  */
-export class Deferred {
+export class Deferred<T = unknown> {
   // The promise object associated with the deferred operation.
-  #_promise
+  #_promise: Promise<T>
   /**
    * The function to call to resolve the deferred operation.
-   * @type {(reason: any) => void}
    */
-  #_resolve
+  #_resolve!: Parameters<ConstructorParameters<typeof Promise<T>>[0]>[0]
   /**
    * The function to call to reject the deferred operation.
-   * @type {(reason: any) => void}
    */
-  #_reject
+  #_reject!: Parameters<ConstructorParameters<typeof Promise<T>>[0]>[1]
   /**
    * Creates a new instance of the Deferred class.
    * @constructor
-   * @param {string} [description] - A description of the deferred operation.
+   * @param description - A description of the deferred operation.
    */
-  constructor(description) {
-    /**
-     * The promise object associated with the deferred operation.
-     * @type {Promise}
-     * @private
-     */
-    this.#_promise = new Promise((resolve, reject) => {
+  constructor(description?: unknown) {
+    void description
+    this.#_promise = new Promise<T>((resolve, reject) => {
       this.#_resolve = resolve
       this.#_reject = reject
     })
-
-    /**
-     * The function to call to resolve the deferred operation.
-     * @type {function}
-     * @private
-     */
-    this.#_resolve
-
-    /**
-     * The function to call to reject the deferred operation.
-     * @type {function}
-     * @private
-     */
-    this.#_reject
   }
 
   /**
